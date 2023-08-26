@@ -1,0 +1,23 @@
+version: "3.6"
+
+services:
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - WORK_DIR=/producer/
+
+    volumes:
+      - ./videos:/data/videos
+
+    env_file:
+      - ../../.env
+
+    environment:
+      - VIDEO_PATHS=/data/videos
+
+    network_mode: "host"
+
+    command: ["python3", "lib/main.py"]
+    # command: ["tail", "-f", "/dev/null"]
