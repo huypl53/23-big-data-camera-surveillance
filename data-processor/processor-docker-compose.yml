@@ -1,0 +1,19 @@
+version: "3.6"
+
+services:
+  processor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    network_mode: "host"
+    env_file:
+      - ../.env
+      - .env
+    environment:
+      - DOCKER_KAFKA_HOST=${DOCKER_KAFKA_HOST}
+      - KAFKA_PORT1=${KAFKA_PORT1}
+      - KAFKA_PORT2=${KAFKA_PORT2}
+      - KAFKA_PORT3=${KAFKA_PORT3}
+      - KAFKA_TOPIC=${KAFKA_TOPIC}
+    # command: ["python3", "-m", "pdb", "main.py"]
+    command: ["printenv", "&&", "tail", "-f", "/dev/null"]

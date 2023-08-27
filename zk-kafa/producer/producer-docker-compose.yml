@@ -19,5 +19,4 @@ services:
 
     network_mode: "host"
 
-    command: ["python3", "lib/main.py"]
-    # command: ["tail", "-f", "/dev/null"]
+    command: ["python3", "src/main.py"]

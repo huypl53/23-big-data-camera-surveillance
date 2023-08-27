@@ -45,6 +45,9 @@ for port in [KAFKA_PORT1, KAFKA_PORT2, KAFKA_PORT3]:
         continue
     bootstrap_servers.append("{0}:{1}".format(DOCKER_KAFKA_HOST, port))
 
+if not len(bootstrap_servers) or not DOCKER_KAFKA_HOST:
+    logging.error("Empty env variables for bootstrap_servers")
+    exit
 producer = KafkaProducer(
     bootstrap_servers=bootstrap_servers,
     api_version=(2, 5, 0),

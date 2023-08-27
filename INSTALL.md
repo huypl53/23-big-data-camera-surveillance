@@ -13,3 +13,5 @@ docker-compose -f zk-kafka-docker-compose.yml up
 cd ./zk-kafka/producer
 docker-compose -f producer-docker-compose.yml up
 ```
+
+Copy videos to ./zk-kafka/producer/videos
