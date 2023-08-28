@@ -1,19 +1,22 @@
-version: "3.6"
+version: "3"
 
 services:
   processor:
     build:
       context: .
       dockerfile: Dockerfile
-    network_mode: "host"
+    # network_mode: "host"
+
+    shm_size: "2.42gb"
+    ports:
+      - 8265:8265
     env_file:
       - ../.env
       - .env
     environment:
-      - DOCKER_KAFKA_HOST=${DOCKER_KAFKA_HOST}
-      - KAFKA_PORT1=${KAFKA_PORT1}
-      - KAFKA_PORT2=${KAFKA_PORT2}
-      - KAFKA_PORT3=${KAFKA_PORT3}
-      - KAFKA_TOPIC=${KAFKA_TOPIC}
+      - LOCAL_MODE=N
+      - RAY_HEAD_ADDRESS
+      - RAY_DASHBOARD_PORT=8265
+      - RAY_DASHBOARD_HOST=0.0.0.0
     # command: ["python3", "-m", "pdb", "main.py"]
-    command: ["printenv", "&&", "tail", "-f", "/dev/null"]
+    command: ["tail", "-f", "/dev/null"]

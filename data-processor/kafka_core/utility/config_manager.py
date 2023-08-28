@@ -38,9 +38,11 @@ class ConfigManager:
                 for port in [KAFKA_PORT1, KAFKA_PORT2, KAFKA_PORT3]
             ]
 
-            self._worker_config["bootstrap_servers"] = bootstrap_servers
-            self._worker_config["topic_name"] = TOPIC_NAME
-            self._worker_config["dlq_config"]["bootstrap_servers"] = bootstrap_servers
+            self._worker_config[0]["bootstrap_servers"] = bootstrap_servers
+            self._worker_config[0]["topic_name"] = TOPIC_NAME
+            self._worker_config[0]["dlq_config"][
+                "bootstrap_servers"
+            ] = bootstrap_servers
 
             logging.info("Worker config: ")
             pprint.pprint(self._worker_config)

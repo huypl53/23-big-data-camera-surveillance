@@ -26,10 +26,12 @@ SASL_USERNAME = os.environ.get("SASL_USERNAME", None)
 SASL_PASSWORD = os.environ.get("SASL_PASSWORD", None)
 SECURITY_PROTOCOL = os.environ.get("SECURITY_PROTOCOL", "PLAINTEXT")
 SASL_MECHANISM = os.environ.get("SASL_MECHANISM")
-RAY_HEAD_ADDRESS = os.environ.get("RAY_HEAD_ADDRESS", "auto")
+RAY_HEAD_ADDRESS = os.environ.get("RAY_HEAD_ADDRESS", None)
+RAY_DASHBOARD_PORT = int(os.environ.get("RAY_DASHBOARD_PORT", "8265"))
+RAY_DASHBOARD_HOST = os.environ.get("RAY_DASHBOARD_HOST", "localhost")
 LOCAL_MODE = os.environ.get("LOCAL_MODE", "Y")
 
-logging.info(
+logging.warning(
     json.dumps(
         {
             "WORKER_NUM_CPUS": WORKER_NUM_CPUS,
@@ -39,6 +41,8 @@ logging.info(
             "SASL_MECHANISM": SASL_MECHANISM,
             "RAY_HEAD_ADDRESS": RAY_HEAD_ADDRESS,
             "LOCAL_MODE": LOCAL_MODE,
+            "RAY_DASHBOARD_PORT": RAY_DASHBOARD_PORT,
+            "RAY_DASHBOARD_HOST": RAY_DASHBOARD_HOST,
         }
     )
 )
@@ -49,7 +53,11 @@ MAX_RESTARTS_REMOTE_WORKER = 10
 if LOCAL_MODE == "Y":
     ray.init()
 else:
-    ray.init(address=RAY_HEAD_ADDRESS)
+    ray.init(
+        address=RAY_HEAD_ADDRESS,
+        dashboard_port=RAY_DASHBOARD_PORT,
+        dashboard_host=RAY_DASHBOARD_HOST,
+    )
 
 logging.info(
     """This cluster consists of

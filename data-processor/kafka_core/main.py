@@ -1,5 +1,5 @@
 import logging
-from kafka_core.consumer_manager import ConsumerWorkerManager
+from consumer_manager import ConsumerWorkerManager
 
 logging.basicConfig(
     format="%(asctime)s-%(process)d-%(levelname)s: %(message)s", level=logging.INFO
