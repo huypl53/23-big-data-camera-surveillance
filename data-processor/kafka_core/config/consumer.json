@@ -1,7 +1,7 @@
 [
   {
     "consumer_name": "some_consumer_group_name",
-    "topic_name": "test-topic",
+    "topic_name": "overwrited-in-config_manager.py",
     "number_of_workers": 2,
     "enable_auto_commit": false,
     "bootstrap_servers": "192.168.64.1:9092",
@@ -23,9 +23,9 @@
       "bootstrap_servers": "192.168.64.1:9092",
       "topic_name": "test-dlq",
       "key_serializer": "STRING_SER",
-      "value_serializer": "STRING_SER",
+      "value_serializer": "BYTE_JSON_SER",
       "acks": "all",
-      "compression_type": "gzip",
+      "compression_type": null,
       "retries": 3,
       "linger_ms": 10
     },

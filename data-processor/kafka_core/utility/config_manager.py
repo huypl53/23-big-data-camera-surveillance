@@ -40,9 +40,12 @@ class ConfigManager:
 
             self._worker_config[0]["bootstrap_servers"] = bootstrap_servers
             self._worker_config[0]["topic_name"] = TOPIC_NAME
+
+            AI_TOPIC = os.environ.get("AI_TOPIC")
             self._worker_config[0]["dlq_config"][
                 "bootstrap_servers"
             ] = bootstrap_servers
+            self._worker_config[0]["dlq_config"]["topic_name"] = AI_TOPIC
 
             logging.info("Worker config: ")
             pprint.pprint(self._worker_config)

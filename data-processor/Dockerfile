@@ -21,7 +21,8 @@ RUN rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
 # Install pip packages
 RUN python3 -m pip install --upgrade pip wheel
 
-RUN  pip install ratelimit pydantic "ray[default]" kafka-python ultralytics
+RUN pip install torch==2.0.0+cpu torchvision==0.15.1+cpu torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cpu
+RUN  pip install "uvicorn[standard]" fastapi ratelimit pydantic "ray[default]" kafka-python ultralytics
 
 WORKDIR /home/
 COPY kafka_core ./kafka_core

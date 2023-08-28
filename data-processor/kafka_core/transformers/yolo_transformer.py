@@ -1,18 +1,15 @@
 import json
+import base64
 
+from ultralytics import YOLO
+import cv2
+import numpy as np
 from kafka.consumer.fetcher import ConsumerRecord
 
 from model.worker_dto import SinkRecordDTO, SinkOperation, SinkOperationType
 from transformers.transformer import StreamTransformer
-from utility.common_util import singleton
-
-from ultralytics import YOLO
-import base64
-import cv2
-import numpy as np
 
 
-@singleton
 class YoloTransformer(StreamTransformer):
     def __init__(self, config: dict):
         super().__init__(config)
@@ -31,7 +28,10 @@ class YoloTransformer(StreamTransformer):
         img_np = np.frombuffer(img_buffer, dtype=np.uint8)
         img = cv2.imdecode(img_np, flags=1)
         results = self.model(img)
-        message_dict = json.loads(results[0].tojson())
+        message_dict = dict()
+        message_dict["predictions"] = json.loads(results[0].tojson())
+        buffer_img = base64.b64encode(img[..., ::-1].tobytes()).decode()
+        message_dict["image"] = buffer_img
         sink_operation = SinkOperation(sink_operation_type=SinkOperationType.UPSERT)
 
         return SinkRecordDTO(

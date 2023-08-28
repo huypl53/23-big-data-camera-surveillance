@@ -8,6 +8,7 @@ SER_DES_OPTIONS = {
     "STRING_DES": lambda k: k.decode("utf-8") if k is not None else k,
     "JSON_DES": lambda v: json.loads(v) if v is not None else v,
     "BYTE_JSON_DES": lambda m: json.loads(m.decode("ascii")),
+    "BYTE_JSON_SER": lambda v: json.dumps(v).encode("ascii") if v is not None else v,
 }
 
 

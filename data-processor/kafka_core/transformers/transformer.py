@@ -1,6 +1,7 @@
 import importlib
 from abc import ABC, abstractmethod
 
+import logging
 from kafka.consumer.fetcher import ConsumerRecord
 
 from exceptions.usi_exceptions import BadInput
@@ -23,7 +24,9 @@ class StreamTransformer(ABC):
 def get_transformer(cls_path: str, config: dict) -> StreamTransformer:
     module_name, class_name = cls_path.rsplit(".", 1)
     stream_transformer = getattr(importlib.import_module(module_name), class_name)
-
+    logging.warning(
+        "from {}. Got {}".format((module_name, class_name), stream_transformer)
+    )
     if not issubclass(stream_transformer, StreamTransformer):
         raise BadInput(f"{cls_path} is not a subclass of StreamTransformer")
 

@@ -1,6 +1,6 @@
-# import uuid
+import uuid
 
-# CLIENT_ID = str(uuid.uuid4())
+CLIENT_ID = str(uuid.uuid4())
 
 
 def singleton(cls):

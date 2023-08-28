@@ -14,7 +14,7 @@ class ConsoleStreamWriter(StreamWriter):
         """
         for sink_record_dto in streams:
             logging.info(
-                f" Key: {sink_record_dto.key} - value: {sink_record_dto.message}"
+                f" Key: {sink_record_dto.key} - value: {sink_record_dto.message}"[:224]
             )
 
     def close(self) -> None:
