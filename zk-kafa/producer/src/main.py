@@ -52,7 +52,7 @@ producer = KafkaProducer(
     bootstrap_servers=bootstrap_servers,
     api_version=(2, 5, 0),
     retries=2,
-    value_serializer=lambda m: json.dumps(m).encode("ascii"),
+    value_serializer=lambda m: json.dumps(m).encode("utf-8"),
 )
 
 

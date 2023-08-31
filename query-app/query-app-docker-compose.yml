@@ -1,0 +1,15 @@
+version: "3.6"
+x-base-config: &base-config
+  env_files: ../.env
+
+services:
+  ui:
+    <<: *base-config
+    port: 3000:3000
+
+  be:
+    <<: *base-config
+    port: 5000:5000
+
+    environment:
+      - API_PORT=5000

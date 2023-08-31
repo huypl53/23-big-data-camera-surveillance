@@ -34,7 +34,7 @@ consumer = KafkaConsumer(
     TOPIC,
     bootstrap_servers=bootstrap_servers,
     group_id="test-comsumer",
-    value_deserializer=lambda m: json.loads(m.decode("ascii")),
+    value_deserializer=lambda m: json.loads(m.decode("utf-8")),
 )
 
 for message in consumer:

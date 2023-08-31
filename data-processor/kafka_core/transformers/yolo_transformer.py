@@ -1,5 +1,7 @@
 import json
 import base64
+import uuid
+import os
 
 from ultralytics import YOLO
 import cv2
@@ -27,12 +29,21 @@ class YoloTransformer(StreamTransformer):
         img_buffer = base64.b64decode(consumer_record.value["content"])
         img_np = np.frombuffer(img_buffer, dtype=np.uint8)
         img = cv2.imdecode(img_np, flags=1)
+
         results = self.model(img)
         message_dict = dict()
         message_dict["predictions"] = json.loads(results[0].tojson())
-        buffer_img = base64.b64encode(img[..., ::-1].tobytes()).decode()
-        message_dict["image"] = buffer_img
+        # buffer_as_text = base64.b64encode(.tobytes()).decode()
+
+        # _, buffer = cv2.imencode(".jpg", img[..., ::-1])
+        # buffer_as_text = base64.b64encode(buffer).decode()
+
+        im_path = "/tmp/{}.jpg".format(uuid.uuid4())
+        cv2.imwrite(im_path, img)
+        buffer_as_text = base64.b64encode(open(im_path, "rb").read()).decode()
+        message_dict["image"] = buffer_as_text
         sink_operation = SinkOperation(sink_operation_type=SinkOperationType.UPSERT)
+        os.remove(im_path)
 
         return SinkRecordDTO(
             key=consumer_record.key,

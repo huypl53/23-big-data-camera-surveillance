@@ -19,7 +19,7 @@ services:
       - PRODUCER_HOST=0.0.0.0
     ports:
       - 8265:8265
-      - ${AI_PRODUCER_PORT}:6969
-    # command: uvicorn main:app --reload --port 6969 --host $PRODUCER_HOST
+      - ${AI_API_PORT}:6969
+    command: uvicorn main:app --reload --port 6969 --host $PRODUCER_HOST
 
-    command: ["tail", "-f", "/dev/null"]
+    # command: ["tail", "-f", "/dev/null"]
